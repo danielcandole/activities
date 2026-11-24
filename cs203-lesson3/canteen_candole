@@ -44,42 +44,42 @@ function makeCart(owner) {
 }
 
 
-// 3. Create Ana's cart
-const ana = makeCart("Ana");
+// 3. Create Pieck's cart
+const pieck = makeCart("Pieck");
 
-ana.add("Rice", 20);
-ana.add("Adobo", 60);
-ana.add("Lumpia", 25);
-ana.add("Juice", 30);
-
-
-// 4. Test Ana's cart
-console.log("Ana count:", ana.count());
-console.log("Ana total:", ana.total());
-console.log("Ana total with 10% discount:", ana.total(makeDiscount(10)));
-console.log("Ana total with 20% discount:", ana.total(makeDiscount(20)));
-console.log("Ana cheapest first:", JSON.stringify(ana.cheapestFirst()));
-console.log("Ana under 30:", JSON.stringify(ana.under(30)));
+pieck.add("Rice", 20);
+pieck.add("Adobo", 60);
+pieck.add("Lumpia", 25);
+pieck.add("Juice", 30);
 
 
-// 5. Create Ben's cart
-const ben = makeCart("Ben");
+// 4. Test Pieck's cart
+console.log("Pieck count:", pieck.count());
+console.log("Pieck total:", pieck.total());
+console.log("Pieck total with 10% discount:", pieck.total(makeDiscount(10)));
+console.log("Pieck total with 20% discount:", pieck.total(makeDiscount(20)));
+console.log("Pieck cheapest first:", JSON.stringify(pieck.cheapestFirst()));
+console.log("Pieck under 30:", JSON.stringify(pieck.under(30)));
 
-ben.add("Juice", 30);
+
+// 5. Create Falco's cart
+const falco = makeCart("Falco");
+
+falco.add("Juice", 30);
 
 
-// 6. Test Ben's cart and privacy
-console.log("Ben total:", ben.total());
-console.log("Ana count after Ben's cart:", ana.count());
-console.log("Ana items:", ana.items);
+// 6. Test Falco's cart and privacy
+console.log("Falco total:", falco.total());
+console.log("Pieck count after Falco's cart:", pieck.count());
+console.log("Pieck items:", pieck.items);
 
 
 // 7. Questions (Answers)
 
-// 1. What is inside the "backpack" of makeDiscount(10), and of Ana's cart?
+// 1. What is inside the "backpack" of makeDiscount(10), and of Pieck's cart?
 // makeDiscount(10) remembers the discount percentage (10).
-// Ana's cart keeps its private items array inside its closure.
+// Pieck's cart keeps its private items array inside its closure.
 
-// 2. Why does adding Juice to Ben's cart not change Ana's cart?
+// 2. Why does adding Juice to Falco's cart not change Pieck's cart?
 // Each call to makeCart() creates a separate items array.
-// Therefore, Ben's cart and Ana's cart have independent data.
+// Therefore, Falco's cart and Pieck's cart have independent data.
