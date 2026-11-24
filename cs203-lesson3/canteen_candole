@@ -1,0 +1,85 @@
+
+// 1. Create a discount function using a closure
+function makeDiscount(percent) {
+    return price => price - (price * percent / 100);
+}
+
+
+// 2. Create a cart using a closure
+function makeCart(owner) {
+    // Private items array
+    const items = [];
+
+    // Return five functions
+    return {
+        add(name, price) {
+            items.push({ name, price });
+        },
+
+        count() {
+            return items.length;
+        },
+
+        total(discount) {
+            const prices = items.map(item =>
+                discount ? discount(item.price) : item.price
+            );
+
+            return prices.reduce((sum, price) => sum + price, 0);
+        },
+
+        cheapestFirst() {
+            return items
+                .slice()
+                .sort((a, b) => a.price - b.price)
+                .map(item => item.name);
+        },
+
+        under(limit) {
+            return items
+                .filter(item => item.price < limit)
+                .map(item => item.name);
+        }
+    };
+}
+
+
+// 3. Create Ana's cart
+const ana = makeCart("Ana");
+
+ana.add("Rice", 20);
+ana.add("Adobo", 60);
+ana.add("Lumpia", 25);
+ana.add("Juice", 30);
+
+
+// 4. Test Ana's cart
+console.log("Ana count:", ana.count());
+console.log("Ana total:", ana.total());
+console.log("Ana total with 10% discount:", ana.total(makeDiscount(10)));
+console.log("Ana total with 20% discount:", ana.total(makeDiscount(20)));
+console.log("Ana cheapest first:", JSON.stringify(ana.cheapestFirst()));
+console.log("Ana under 30:", JSON.stringify(ana.under(30)));
+
+
+// 5. Create Ben's cart
+const ben = makeCart("Ben");
+
+ben.add("Juice", 30);
+
+
+// 6. Test Ben's cart and privacy
+console.log("Ben total:", ben.total());
+console.log("Ana count after Ben's cart:", ana.count());
+console.log("Ana items:", ana.items);
+
+
+// 7. Questions (Answers)
+
+// 1. What is inside the "backpack" of makeDiscount(10), and of Ana's cart?
+// makeDiscount(10) remembers the discount percentage (10).
+// Ana's cart keeps its private items array inside its closure.
+
+// 2. Why does adding Juice to Ben's cart not change Ana's cart?
+// Each call to makeCart() creates a separate items array.
+// Therefore, Ben's cart and Ana's cart have independent data.
